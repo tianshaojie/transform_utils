@@ -1,4 +1,5 @@
 import 'delegates/list.dart';
+import 'option_map.dart';
 import 'parse_utils.dart';
 
 class OptionList<E> extends DelegatingList<E> {
@@ -46,27 +47,27 @@ class OptionList<E> extends DelegatingList<E> {
     return ParseUtil.parseBool(result, defaultValue);
   }
 
-  Map<dynamic, dynamic> optJSONObject(int index) {
+  OptionMap<dynamic, dynamic> optJSONObject(int index) {
     try {
-      return (delegate[index] ?? {}) as Map;
+      return OptionMap()..addAll((delegate[index] ?? {}) as Map);
     } catch (ignored) {
-      return {};
+      return OptionMap();
     }
   }
 
-  Map<dynamic, dynamic> getJSONObject(int index) {
+  OptionMap<dynamic, dynamic> getJSONObject(int index) {
     return optJSONObject(index);
   }
 
-  List<dynamic> optJSONArray(int index) {
+  OptionList<dynamic> optJSONArray(int index) {
     try {
-      return (delegate[index] ?? []) as List;
+      return OptionList()..addAll((delegate[index] ?? []) as List);
     } catch (ignored) {
-      return [];
+      return OptionList();
     }
   }
 
-  List<dynamic> getJSONArray(int index) {
+  OptionList<dynamic> getJSONArray(int index) {
     return optJSONArray(index);
   }
 }

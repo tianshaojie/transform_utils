@@ -1,4 +1,5 @@
 import 'delegates/map.dart';
+import 'option_list.dart';
 import 'parse_utils.dart';
 
 class OptionMap<K, V> extends DelegatingMap<K, V> {
@@ -37,27 +38,27 @@ class OptionMap<K, V> extends DelegatingMap<K, V> {
     return ParseUtil.parseBool(result);
   }
 
-  Map<dynamic, dynamic> optJSONObject(String key) {
+  OptionMap<dynamic, dynamic> optJSONObject(String key) {
     try {
-      return (delegate[key] ?? {}) as Map;
+      return OptionMap()..addAll((delegate[key] ?? {}) as Map);
     } catch (ignored) {
-      return {};
+      return OptionMap();
     }
   }
 
-  Map<dynamic, dynamic> getJSONObject(String key) {
+  OptionMap<dynamic, dynamic> getJSONObject(String key) {
     return optJSONObject(key);
   }
 
-  List<dynamic> optJSONArray(String key) {
+  OptionList<dynamic> optJSONArray(String key) {
     try {
-      return (delegate[key] ?? []) as List;
+      return OptionList()..addAll((delegate[key] ?? []) as List);
     } catch (ignored) {
-      return [];
+      return OptionList();
     }
   }
 
-  List<dynamic> getJSONArray(String key) {
+  OptionList<dynamic> getJSONArray(String key) {
     return optJSONArray(key);
   }
 
